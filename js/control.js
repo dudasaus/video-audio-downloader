@@ -14,6 +14,7 @@ var audioButton = document.getElementById('download-audio');
 
 var url;
 var valid = false;
+var videoInfo;
 
 // Preview on input
 inputField.addEventListener('input', (e) => {
@@ -29,7 +30,7 @@ inputField.addEventListener('input', (e) => {
                 valid = false;
             }
             else {
-                console.log(info);
+                videoInfo = info;
                 vinfo.innerHTML = `<strong>${info.title}</strong>`
                 thumbnail.src = info.thumbnail;
                 thumbnail.style.display = "block";
@@ -39,20 +40,33 @@ inputField.addEventListener('input', (e) => {
     }
 });
 
-videoButton.addEventListener('click', save);
-audioButton.addEventListener('click', save);
+videoButton.addEventListener('click', () => {
+    save(false);
+});
+audioButton.addEventListener('click', ()=> {
+    save(true);
+});
 
 // Save
-function save() {
+function save(audio=false) {
     var options = {
-        filters: [
-            {name: "mp4", extensions: ["mp4"]}
-        ]
+        defaultPath: videoInfo.title
     };
+    if (audio) {
+        options.filters = [
+            {name: "mp3", extensions: ["mp3"]}
+        ];
+    }
+    else {
+        options.filters = [
+            {name: "mp4", extensions: ["mp4"]}
+        ];
+    }
     if (valid) {
         dialog.showSaveDialog(options, (fname) => {
             if (fname != undefined) {
-                downloadVideo(fname);
+                if (audio) downloadAudio(fname);
+                else downloadVideo(fname);
             }
         });
     }
@@ -61,9 +75,7 @@ function save() {
 // Download video
 function downloadVideo(file) {
     console.log(url, file);
-    var video = ytdl(
-        url
-    );
+    var video = ytdl(url);
 
     video.pipe(fs.createWriteStream(file, { flags: 'a' }));
 
@@ -73,5 +85,13 @@ function downloadVideo(file) {
 
     video.on('end', () => {
         console.log(`Video downloaded at ${file}`);
+    });
+}
+
+// Download audio
+function downloadAudio(file) {
+    ytdl.exec(url, ['-x', '--audio-format', 'mp3', '-o', file], {}, function(err, output) {
+      if (err) throw err;
+      console.log(output.join('\n'));
     });
 }
