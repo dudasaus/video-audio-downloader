@@ -14,9 +14,9 @@ div.top {
 div.main-section {
   padding: 1em; }
 
-div.thumbnail {
-  min-height: 208px;
-  background: #eee; }
+#thumbnail {
+  width: 100%;
+  display: none; }
 
 .btn {
   position: relative;
@@ -25,7 +25,7 @@ div.thumbnail {
   background: #F44336;
   color: white;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1em;
   cursor: pointer;
   padding: 0px 8px;
   min-width: 64px;

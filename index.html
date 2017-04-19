@@ -5,20 +5,23 @@
     </head>
     <body>
         <div class="top">
-            <h3>Enter a video url below:</h3>
+            <h3>Paste a video url below:</h3>
             <input id="url-input" type="text" placeholder="https://www.youtube.com/..."/>
         </div>
         <div class="main-section">
             <div class="preview">
-                <div class="thumbnail"></div>
+                <img id="thumbnail"/>
                 <p>
                     <strong>Title</strong><br/>
                     <em>Artist, year</em>
                 </p>
+                <p id="temp">Hello world!</p>
             </div>
             <div>
-                <button class="btn">test</button>
+                <button class="btn">Download</button>
             </div>
         </div>
+        <!-- scripts -->
+        <script src="js/control.js"></script>
     </body>
 </html>

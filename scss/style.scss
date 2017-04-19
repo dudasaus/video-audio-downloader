@@ -27,9 +27,9 @@ div.main-section {
     padding: 1em;
 }
 
-div.thumbnail {
-    min-height: 208px;
-    background: #eee;
+#thumbnail {
+    width: 100%;
+    display: none;
 }
 
 .btn {
@@ -39,7 +39,7 @@ div.thumbnail {
     background: $red;
     color: white;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
     cursor: pointer;
     padding: 0px 8px;
     min-width: 64px;

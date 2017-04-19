@@ -1,8 +1,9 @@
 {
-    "name": "video-audio-downloader",
-    "version": "0.0.0",
-    "main": "main.js",
-    "dependencies": {
-        "electron": "^1.6.5"
-    }
+  "name": "video-audio-downloader",
+  "version": "0.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^1.6.5",
+    "youtube-dl": "^1.11.1"
+  }
 }
