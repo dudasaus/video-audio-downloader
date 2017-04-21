@@ -2,6 +2,7 @@
 $red: #F44336;
 $dark_red: #E53935;
 $light_yellow: #FFF9C4;
+$gray: #757575;
 $shadow: rgba(black, 0.5);
 
 // Font
@@ -13,10 +14,17 @@ body {
     //background: $red;
 }
 
+#page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+h3 {
+    margin-top: 0;
+}
+
 div.top {
-    h3 {
-        margin-top: 0;
-    }
     padding: 1em;
     color: white;
     background: $red;
@@ -25,6 +33,7 @@ div.top {
 
 div.main-section {
     padding: 1em;
+    flex-grow: 1;
 }
 
 #thumbnail {
@@ -61,5 +70,30 @@ div.main-section {
     &:focus, &:hover {
         outline: none;
         background: $light_yellow;
+    }
+}
+
+#buttons {
+    display: none;
+}
+
+#downloading {
+    //display: none;
+    padding: 1em;
+    color: white;
+    background: $gray;
+}
+
+#loading-bar {
+    background: $shadow;
+    height: 8px;
+    position: relative;
+    #bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background: $red;
     }
 }

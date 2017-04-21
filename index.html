@@ -4,19 +4,27 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
-        <div class="top">
-            <h3>Paste a video url below:</h3>
-            <input id="url-input" type="text" placeholder="https://www.youtube.com/..."/>
-        </div>
-        <div class="main-section">
-            <div class="preview">
-                <img id="thumbnail"/>
-                <p id="video-info">
-                </p>
+        <div id="page">
+            <div class="top">
+                <h3>Paste a video URL below:</h3>
+                <input id="url-input" type="text" placeholder="https://www.youtube.com/..."/>
             </div>
-            <div>
-                <button id="download-video" class="btn">Download video</button>
-                <button id="download-audio" class="btn">Download audio</button>
+            <div class="main-section">
+                <div class="preview">
+                    <img id="thumbnail"/>
+                    <p id="video-info">
+                    </p>
+                </div>
+                <div id="buttons">
+                    <button id="download-video" class="btn">Download video</button>
+                    <button id="download-audio" class="btn">Download audio</button>
+                </div>
+            </div>
+            <div id="downloading">
+                <h3>Bla bla bla</h3>
+                <div id="loading-bar">
+                    <div id="bar"></div>
+                </div>
             </div>
         </div>
         <!-- scripts -->

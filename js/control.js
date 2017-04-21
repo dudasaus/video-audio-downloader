@@ -11,6 +11,9 @@ var vinfo = document.getElementById('video-info');
 var thumbnail = document.getElementById('thumbnail');
 var videoButton = document.getElementById('download-video');
 var audioButton = document.getElementById('download-audio');
+var buttons = document.getElementById('buttons');
+var downloading = document.getElementById('downloading');
+var downloadingText = downloading.childNodes[1];
 
 var url;
 var valid = false;
@@ -22,12 +25,15 @@ inputField.addEventListener('input', (e) => {
 
     // Get info
     if (url.length > 5) {
+        thumbnail.style.display = 'none';
         vinfo.innerHTML = "Getting video info...";
+        buttons.style.display = 'none';
         ytdl.getInfo(url, (err, info) => {
             if (err) {
                 console.log(err);
                 vinfo.innerHTML = "Something went wrong! :(";
                 valid = false;
+                buttons.style.display = 'none';
             }
             else {
                 videoInfo = info;
@@ -35,6 +41,7 @@ inputField.addEventListener('input', (e) => {
                 thumbnail.src = info.thumbnail;
                 thumbnail.style.display = "block";
                 valid = true;
+                buttons.style.display = 'block';
             }
         });
     }
@@ -65,6 +72,7 @@ function save(audio=false) {
     if (valid) {
         dialog.showSaveDialog(options, (fname) => {
             if (fname != undefined) {
+                buttons.style.display = 'none';
                 if (audio) downloadAudio(fname);
                 else downloadVideo(fname);
             }
@@ -76,8 +84,22 @@ function save(audio=false) {
 function downloadVideo(file) {
     console.log(url, file);
     var video = ytdl(url);
+    var totalSize = 100;
+    var currentSize = 0;
+
+    downloadingText.innerText = 'Downloading video file...';
+    downloading.style.display = 'block';
 
     video.pipe(fs.createWriteStream(file, { flags: 'a' }));
+
+    video.on('info', (info) => {
+        totalSize = info.size;
+    });
+
+    video.on('data', (chunk) => {
+        currentSize += chunk.length;
+        loadingBar((currentSize / totalSize) * 100);
+    });
 
     video.on('error', (e) => {
         console.log(e);
@@ -85,16 +107,25 @@ function downloadVideo(file) {
 
     video.on('end', () => {
         console.log(`Video downloaded at ${file}`);
-        alert(`Video downloaded at ${file}`);
+        downloadingText.innerText = 'Download complete';
     });
 }
 
 // Download audio
 function downloadAudio(file) {
+    downloadingText.innerText = 'Downloading audio file...';
+    downloading.style.display = 'block';
+
     ytdl.exec(url, ['-x', '--audio-format', 'mp3', '-o', file], {}, function(err, output) {
       if (err) throw err;
       console.log(output.join('\n'));
-
-        alert(`Audio downloaded at ${file}`);
+        downloadingText.innerText = 'Download complete';
     });
+}
+
+function loadingBar(percent, display='block') {
+    var lb = document.getElementById('loading-bar');
+    var bar = document.getElementById('bar');
+    lb.style.display = display;
+    bar.style.width = percent + '%';
 }
