@@ -85,6 +85,7 @@ function downloadVideo(file) {
 
     video.on('end', () => {
         console.log(`Video downloaded at ${file}`);
+        alert(`Video downloaded at ${file}`);
     });
 }
 
@@ -93,5 +94,7 @@ function downloadAudio(file) {
     ytdl.exec(url, ['-x', '--audio-format', 'mp3', '-o', file], {}, function(err, output) {
       if (err) throw err;
       console.log(output.join('\n'));
+
+        alert(`Audio downloaded at ${file}`);
     });
 }
