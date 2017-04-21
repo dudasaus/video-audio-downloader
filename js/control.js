@@ -88,6 +88,7 @@ function downloadVideo(file) {
     var currentSize = 0;
 
     downloadingText.innerText = 'Downloading video file...';
+    loadingBar(0);
     downloading.style.display = 'block';
 
     video.pipe(fs.createWriteStream(file, { flags: 'a' }));
@@ -115,6 +116,7 @@ function downloadVideo(file) {
 function downloadAudio(file) {
     downloadingText.innerText = 'Downloading audio file...';
     downloading.style.display = 'block';
+    loadingBar(0, 'none');
 
     ytdl.exec(url, ['-x', '--audio-format', 'mp3', '-o', file], {}, function(err, output) {
       if (err) throw err;

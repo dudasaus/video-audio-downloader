@@ -62,14 +62,19 @@ div.main-section {
   display: none; }
 
 #downloading {
+  display: none;
   padding: 1em;
   color: white;
   background: #757575; }
+  #downloading h3 {
+    margin-bottom: 0; }
 
 #loading-bar {
+  margin-top: 1em;
   background: rgba(0, 0, 0, 0.5);
   height: 8px;
-  position: relative; }
+  position: relative;
+  display: none; }
   #loading-bar #bar {
     position: absolute;
     top: 0;

@@ -78,16 +78,21 @@ div.main-section {
 }
 
 #downloading {
-    //display: none;
+    display: none;
+    h3 {
+        margin-bottom: 0;
+    }
     padding: 1em;
     color: white;
     background: $gray;
 }
 
 #loading-bar {
+    margin-top: 1em;
     background: $shadow;
     height: 8px;
     position: relative;
+    display: none;
     #bar {
         position: absolute;
         top: 0;
