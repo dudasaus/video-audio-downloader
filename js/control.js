@@ -81,6 +81,8 @@ function save(audio=false) {
     if (valid) {
         dialog.showSaveDialog(options, (fname) => {
             if (fname != undefined) {
+                lastFileValid = false;
+                openButton.style.display = 'none';
                 buttons.style.display = 'none';
                 if (audio) downloadAudio(fname);
                 else downloadVideo(fname);
@@ -128,7 +130,7 @@ function downloadVideo(file) {
         console.log(`Video downloaded at ${file}`);
         downloadingText.innerText = 'Download complete';
         buttons.style.display = 'block';
-        lastFileValid = true;
+        showOpen();
         lastFile = file;
         console.log(file);
     });
@@ -149,8 +151,7 @@ function downloadAudio(file) {
         downloadingText.innerText = 'Download complete';
         buttons.style.display = 'block';
         lastFile = file;
-        lastFileValid = true;
-        console.log(file);
+        showOpen();
     });
 }
 
@@ -161,6 +162,11 @@ function loadingBar(percent, display='block') {
     bar.style.width = percent + '%';
 }
 
+function showOpen() {
+    openButton.style.display = "inline-block";
+    loadingBar(0, 'none');
+    lastFileValid = true;
+}
 
 function round(x, dec) {
     x *= Math.pow(10, dec);

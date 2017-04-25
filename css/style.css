@@ -61,6 +61,10 @@ div.main-section {
 #buttons {
   display: none; }
 
+#open-file {
+  display: none;
+  margin-top: 8px; }
+
 #downloading {
   display: none;
   padding: 1em;
