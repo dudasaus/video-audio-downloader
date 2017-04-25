@@ -65,15 +65,20 @@ openButton.addEventListener('click', () => {
 
 // Save
 function save(audio=false) {
+    var dp = videoInfo.title;
     var options = {
         defaultPath: videoInfo.title
     };
     if (audio) {
+        dp = app.getPath('music') + "/" + dp;
+        options.defaultPath = dp;
         options.filters = [
             {name: "mp3", extensions: ["mp3"]}
         ];
     }
     else {
+        dp = app.getPath('videos') + "/" + dp;
+        options.defaultPath = dp;
         options.filters = [
             {name: "mp4", extensions: ["mp4"]}
         ];
