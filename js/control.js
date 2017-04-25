@@ -2,6 +2,7 @@
 const {remote} = require('electron');
 const fs = require('fs');
 const ytdl = require('youtube-dl');
+const open = require('open');
 const app = remote.app;
 const dialog = remote.dialog;
 
@@ -11,6 +12,7 @@ var vinfo = document.getElementById('video-info');
 var thumbnail = document.getElementById('thumbnail');
 var videoButton = document.getElementById('download-video');
 var audioButton = document.getElementById('download-audio');
+var openButton = document.getElementById('open-file');
 var buttons = document.getElementById('buttons');
 var downloading = document.getElementById('downloading');
 var downloadingText = downloading.childNodes[1];
@@ -18,6 +20,8 @@ var downloadingText = downloading.childNodes[1];
 var url;
 var valid = false;
 var videoInfo;
+var lastFile;
+var lastFileValid = false;
 
 // Preview on input
 inputField.addEventListener('input', (e) => {
@@ -52,6 +56,11 @@ videoButton.addEventListener('click', () => {
 });
 audioButton.addEventListener('click', ()=> {
     save(true);
+});
+openButton.addEventListener('click', () => {
+    if (lastFileValid) {
+        open(lastFile);
+    }
 });
 
 // Save
@@ -112,12 +121,16 @@ function downloadVideo(file) {
 
     video.on('error', (e) => {
         console.log(e);
+        lastFileValid = false;
     });
 
     video.on('end', () => {
         console.log(`Video downloaded at ${file}`);
         downloadingText.innerText = 'Download complete';
         buttons.style.display = 'block';
+        lastFileValid = true;
+        lastFile = file;
+        console.log(file);
     });
 }
 
@@ -128,10 +141,16 @@ function downloadAudio(file) {
     loadingBar(0, 'none');
 
     ytdl.exec(url, ['-x', '--audio-format', 'mp3', '-o', file], {}, function(err, output) {
-      if (err) throw err;
-      console.log(output.join('\n'));
+      if (err) {
+          throw err;
+          lastFileValid = false;
+      }
+      //console.log(output.join('\n'));
         downloadingText.innerText = 'Download complete';
         buttons.style.display = 'block';
+        lastFile = file;
+        lastFileValid = true;
+        console.log(file);
     });
 }
 

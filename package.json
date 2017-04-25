@@ -4,6 +4,7 @@
   "main": "main.js",
   "dependencies": {
     "electron": "^1.6.5",
+    "open": "0.0.5",
     "youtube-dl": "^1.11.1"
   }
 }
