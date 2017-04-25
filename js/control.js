@@ -86,6 +86,7 @@ function downloadVideo(file) {
     var video = ytdl(url);
     var totalSize = 100;
     var currentSize = 0;
+    var mb;
 
     downloadingText.innerText = 'Downloading video file...';
     loadingBar(0);
@@ -95,11 +96,18 @@ function downloadVideo(file) {
 
     video.on('info', (info) => {
         totalSize = info.size;
+        //console.log(info.size);
+        mb = info.size / Math.pow(2, 20);
+        mb = round(mb, 2);
+        //console.log(mb + " mb");
+        console.log(info);
     });
 
     video.on('data', (chunk) => {
         currentSize += chunk.length;
         loadingBar((currentSize / totalSize) * 100);
+        var currentMb = round(currentSize / Math.pow(2, 20), 2);
+        downloadingText.innerText = "Downloading video file (" + currentMb + "/" + mb + " MB)";
     });
 
     video.on('error', (e) => {
@@ -109,6 +117,7 @@ function downloadVideo(file) {
     video.on('end', () => {
         console.log(`Video downloaded at ${file}`);
         downloadingText.innerText = 'Download complete';
+        buttons.style.display = 'block';
     });
 }
 
@@ -122,6 +131,7 @@ function downloadAudio(file) {
       if (err) throw err;
       console.log(output.join('\n'));
         downloadingText.innerText = 'Download complete';
+        buttons.style.display = 'block';
     });
 }
 
@@ -130,4 +140,12 @@ function loadingBar(percent, display='block') {
     var bar = document.getElementById('bar');
     lb.style.display = display;
     bar.style.width = percent + '%';
+}
+
+
+function round(x, dec) {
+    x *= Math.pow(10, dec);
+    x = Math.round(x);
+    x /= Math.pow(10, dec);
+    return x;
 }
